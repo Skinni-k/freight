@@ -5,5 +5,5 @@ export const customer: Omit<Customer, "id" | "shipment"> = {
   name: "Timber",
   address: "Waterloo",
   mobile: 1234567890,
-  phone: 0912343545,
+  phone: 9123435450,
 };

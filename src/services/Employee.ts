@@ -1,29 +1,31 @@
 import { AppDataSource } from "../data-source";
-import { Role } from "../entity";
 import { Employee } from "../entity/Employee";
+import { getRole } from "./Role";
 
-export const createEmployee = async (employee: Partial<Employee>, role_id: number) => {
+export const createEmployee = async (employee: Partial<Employee>) => {
   console.log("Get Role:");
-  const role = await AppDataSource.manager.findOneBy(Role, { id: role_id });
+  const role = await getRole(1)
 
   console.log("Inserting a new employee into the database...");
   const employeeRepo = AppDataSource.getRepository(Employee);
   employee.role = role
-  await employeeRepo.save(employee);
-  console.log("Saved a new employee with id: " + employee.id);
-  return employee.id;
+  const savedEmployee = await employeeRepo.save(employee);
+  console.log("Saved a new employee with id: " + savedEmployee.id);
+  return savedEmployee.id;
 };
 
 export const listEmployees = async () => {
   console.log("Loading Employee from the database...");
   const employees = await AppDataSource.manager.find(Employee);
   console.log("Loaded Employee: ", employees);
+  return employees
 };
 
 export const getEmployee = async (id: number) => {
   console.log(`Getting employee - ${id} from the database...`);
   const singleEmployee = await AppDataSource.manager.findOneBy(Employee, { id })
   console.log("Employee: ", singleEmployee);
+  return singleEmployee
 };
 
 export const editEmployee = async (id: number, employee: Partial<Employee>) => {
@@ -34,10 +36,12 @@ export const editEmployee = async (id: number, employee: Partial<Employee>) => {
     employee
   );
   console.log("Updated Employee: ", updatedEmployee);
+  return updatedEmployee
 };
 
 export const deleteEmployee = async (id: number) => {
   console.log(`Removing employee - ${id} from the database...`);
-  const employee = await AppDataSource.manager.delete(Employee, { id });
-  console.log("Removed Employee: ", employee);
+  const deletedEmployee = await AppDataSource.manager.delete(Employee, { id });
+  console.log("Removed Employee: ", deletedEmployee);
+  return deletedEmployee
 };

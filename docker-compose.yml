@@ -16,7 +16,7 @@ services:
     depends_on:
       - mysqldb
     build: ./
-    command: npm run migration
+    # command: npm run test
     # command: npm run migration:revert
     restart: unless-stopped
     env_file: ./.env
