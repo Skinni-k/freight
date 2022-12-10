@@ -1,20 +1,20 @@
-import { employee } from "./constants/Employee";
+import { brand } from "./constants/Brand";
 import { AppDataSource } from "./data-source";
 import {
-  createEmployee,
-  deleteEmployee,
-  editEmployee,
-  getEmployee,
-  listEmployees,
-} from "./services/Employee";
+  createBrand,
+  deleteBrand,
+  editBrand,
+  getBrand,
+  listBrands,
+} from "./services/Brand";
 
 AppDataSource.initialize()
   .then(async () => {
-    const id = await createEmployee(employee, 1);
-    await listEmployees();
-    await editEmployee(id, { name: "Kevin" });
-    await getEmployee(id);
-    await deleteEmployee(id);
-    await listEmployees();
+    const id = await createBrand(brand);
+    await listBrands();
+    await editBrand(id, { name: "Kevin" });
+    await getBrand(id);
+    await deleteBrand(id);
+    await listBrands();
   })
   .catch((error) => console.log(error));
